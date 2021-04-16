@@ -1,0 +1,3 @@
+For AWS:
+	1- Could create a flask application to upload the files to the amazon web service s3 storage from your local host/local machine
+ 	2 - Could use 'gingerit' or others library to fix the grammartical mistakes and make the transcribed text more accurate. 

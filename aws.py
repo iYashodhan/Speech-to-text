@@ -1,7 +1,6 @@
 from urllib.request import urlopen
 import json
 import boto3
-import os
 import time
 
 # The audio file should be uploaded in a Bucket, in the AWS, read 'Read Me' for more
@@ -39,8 +38,8 @@ def amazon_transcribe(file, max_speakers=-1):
     if max_speakers > 10:
         raise ValueError("Maximum detected speakers is 10.")
 
-    job_uri = "s3://{}/{}"
-    job_uri.format(bucket, file)
+    #job_uri = "s3://{}/{}"
+    #job_uri.format(bucket, file)
     job_name = (file.split('.')[0]).replace(" ", "")
 
     # check if name is taken or not
@@ -91,19 +90,17 @@ def run(access_key, secret_key, file):
 
     global transcribe
     global bucket
+    global job_uri
+
     transcribe = boto3.client('transcribe',
                               aws_access_key_id=access_key,  # insert your access key ID here,
                               aws_secret_access_key=secret_key,  # insert your secret
                               region_name="ap-south-1")  # region: Mumbai south"
 
     bucket = input('Enter bucket name: ')
-
-    file = open(file, 'r+')
-    key = file.name
     job_uri = f"s3://{bucket}/{file}"
 
-    result = amazon_transcribe(file_name, 5)
-    print(result['TranscriptionJob']['Transcript']['TranscriptFileUri'])
+    amazon_transcribe(file_name, 5)
 
 
 if __name__ == '__main__':
